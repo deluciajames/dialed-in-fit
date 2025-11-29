@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+venv/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# OS Files
+.DS_Store
+.Trash/
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Don't include parent directories
+../*
+
+# Environment
+.env
