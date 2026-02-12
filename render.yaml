@@ -32,9 +32,6 @@ services:
     startCommand: streamlit run Home.py --server.port=$PORT --server.headless=true --server.address=0.0.0.0
     envVars:
       - key: API_BASE_URL
-        fromService:
-          name: dialed-in-api
-          type: web
-          property: host
+        value: https://dialed-in-api.onrender.com
       - key: PYTHON_VERSION
         value: 3.11.6
