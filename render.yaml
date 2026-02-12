@@ -1,0 +1,40 @@
+databases:
+  - name: dialed-in-db
+    plan: free
+    databaseName: dialed_in_fitness
+    user: dialed_in_user
+
+services:
+  # Backend - FastAPI API
+  - type: web
+    name: dialed-in-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app.main:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dialed-in-db
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: 3.11.6
+
+  # Frontend - Streamlit UI
+  - type: web
+    name: dialed-in-app
+    runtime: python
+    plan: free
+    rootDir: frontend
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run Home.py --server.port=$PORT --server.headless=true --server.address=0.0.0.0
+    envVars:
+      - key: API_BASE_URL
+        fromService:
+          name: dialed-in-api
+          type: web
+          property: host
+      - key: PYTHON_VERSION
+        value: 3.11.6

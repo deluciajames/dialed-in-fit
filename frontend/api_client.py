@@ -3,8 +3,13 @@ import os
 from typing import Dict, List, Optional
 from datetime import date
 
-# API base URL
-API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
+# API base URL - Render's service discovery provides just the hostname,
+# so we add https:// if no scheme is present
+_raw_api_url = os.getenv("API_BASE_URL", "http://localhost:8000")
+if _raw_api_url and not _raw_api_url.startswith("http"):
+    API_BASE_URL = f"https://{_raw_api_url}"
+else:
+    API_BASE_URL = _raw_api_url
 
 
 class APIClient:

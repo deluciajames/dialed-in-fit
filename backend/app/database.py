@@ -10,6 +10,10 @@ load_dotenv()
 # Later can switch to PostgreSQL for production
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./dialed_in.db")
 
+# Render provides postgres:// but SQLAlchemy 2.x requires postgresql://
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 # For SQLite, we need check_same_thread=False
 if DATABASE_URL.startswith("sqlite"):
     engine = create_engine(
