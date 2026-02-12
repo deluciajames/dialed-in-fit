@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import date
-from typing import Optional, Dict, List
+from typing import Any, Optional, Dict, List
 from app.models.models import GoalType
 
 
@@ -142,7 +142,7 @@ class DashboardResponse(BaseModel):
     current_score: float  # 0-10 scale
     period_average: float  # 0-10 scale for selected time period
     score_breakdown: ScoreBreakdown
-    daily_scores: List[Dict[str, any]]  # List of {date, score} for chart
+    daily_scores: List[Dict[str, Any]]  # List of {date, score} for chart
 
 
 # User schemas
